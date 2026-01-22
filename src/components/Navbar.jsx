@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { formatCurrency } from "../utils/formatCurrency";
 
 const Navbar = () => {
@@ -6,29 +7,39 @@ const Navbar = () => {
 
   return (
     <nav className="navbar navbar-dark bg-dark px-4">
-      <span className="navbar-brand fw-bold">
+      <Link to="/" className="navbar-brand fw-bold text-decoration-none">
         🍕 Pizzería Mamma Mía!
-      </span>
+      </Link>
 
       <div className="d-flex gap-2">
-        <button className="btn btn-outline-light btn-sm">🏠 Home</button>
+        <Link to="/" className="btn btn-outline-light btn-sm">
+          🏠 Home
+        </Link>
 
         {token ? (
           <>
-            <button className="btn btn-outline-light btn-sm">🔓 Profile</button>
-            <button className="btn btn-outline-light btn-sm">🔒 Logout</button>
+            <Link to="/profile" className="btn btn-outline-light btn-sm">
+              🔓 Profile
+            </Link>
+            <button className="btn btn-outline-light btn-sm">
+              🔒 Logout
+            </button>
           </>
         ) : (
           <>
-            <button className="btn btn-outline-light btn-sm">🔐 Login</button>
-            <button className="btn btn-outline-light btn-sm">🔐 Register</button>
+            <Link to="/login" className="btn btn-outline-light btn-sm">
+              🔐 Login
+            </Link>
+            <Link to="/register" className="btn btn-outline-light btn-sm">
+              🔐 Register
+            </Link>
           </>
         )}
       </div>
 
-      <button className="btn btn-outline-info btn-sm ms-auto">
+      <Link to="/cart" className="btn btn-outline-info btn-sm ms-auto">
         🛒 Total: ${formatCurrency(total)}
-      </button>
+      </Link>
     </nav>
   );
 };

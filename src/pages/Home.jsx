@@ -1,26 +1,33 @@
-import Header from "./Header";
-import CardPizza from "./CardPizza";
+import Header from "../components/Header";
+import CardPizza from "../components/CardPizza";
 import { useState, useEffect } from "react";
 
 const Home = () => {
-
   const [pizzas, setPizzas] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
   useEffect(() => {
-  const getPizzas = async () => {
-    try {
-      const response = await fetch("http://localhost:5001/api/pizzas/");
-      const data = await response.json();
-      setPizzas(data);
-    } catch (error) {
-      console.error("Error al cargar pizzas", error);
-    }
-  };
+    const getPizzas = async () => {
+      try {
+        setLoading(true);
+        setError("");
 
-  getPizzas();
-}, []);
+        const response = await fetch("http://localhost:5001/api/pizzas/");
+        if (!response.ok) throw new Error("No se pudieron cargar las pizzas");
+
+        const data = await response.json();
+        setPizzas(data);
+      } catch (err) {
+        console.error("Error al cargar pizzas", err);
+        setError(err.message || "Error al cargar pizzas");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    getPizzas();
+  }, []);
 
   return (
     <>
