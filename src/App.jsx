@@ -3,7 +3,8 @@ import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 // import Register from './components/Register'
 // import Login from './components/Login'
-import Cart from './components/Cart'
+// import Cart from './components/Cart'
+import Pizza from './components/Pizza'
 import './App.css'
 
 function App() {
@@ -12,8 +13,9 @@ function App() {
       <Navbar />
       {/* <Register /> */}
       {/* <Login /> */}
-      <Cart />
+      {/* <Cart /> */}
       {/* <Home /> */}
+      <Pizza />
       <Footer />
     </>
   )
