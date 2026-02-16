@@ -1,6 +1,10 @@
 import PropTypes from "prop-types";
+import { useContext } from "react";
+import { CartContext } from "../context/CartContext";
 
-const CardPizza = ({ name, price, ingredients, img }) => {
+const CardPizza = ({ id, name, price, ingredients, img }) => {
+  const { addToCart } = useContext(CartContext);
+
   return (
     <div className="card h-100">
       <img src={img} className="card-img-top" alt={name} />
@@ -15,7 +19,6 @@ const CardPizza = ({ name, price, ingredients, img }) => {
             <li key={index}>• {ingredient}</li>
           ))}
         </ul>
-          
 
         <hr />
         <h5 className="text-center fw-bold">
@@ -25,13 +28,20 @@ const CardPizza = ({ name, price, ingredients, img }) => {
 
       <div className="card-footer d-flex justify-content-between">
         <button className="btn btn-outline-dark btn-sm">👀 Ver Más</button>
-        <button className="btn btn-dark btn-sm">🛒 Añadir</button>
+
+        <button
+          className="btn btn-dark btn-sm"
+          onClick={() => addToCart({ id, name, price, img })}
+        >
+          🛒 Añadir
+        </button>
       </div>
     </div>
   );
 };
 
 CardPizza.propTypes = {
+  id: PropTypes.string.isRequired, 
   name: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
   ingredients: PropTypes.arrayOf(PropTypes.string).isRequired,

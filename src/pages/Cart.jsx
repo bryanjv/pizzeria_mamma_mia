@@ -1,36 +1,17 @@
-import { pizzaCart as initialCart } from "../assets/js/pizzas";
-import { useState } from "react";
+import { useContext } from "react";
+import { CartContext } from "../context/CartContext";
 
 const Cart = () => {
-  const [cart, setCart] = useState(initialCart);
-
-  const handleIncrement = (id) => {
-    // Lógica para incrementar la cantidad de un ítem en el carrito
-    setCart(
-      cart.map((item) =>
-        item.id === id ? { ...item, count: item.count + 1 } : item,
-      ),
-    );
-  };
-
-  const handleDecrement = (id) => {
-    // Lógica para decrementar la cantidad de un ítem en el carrito
-    setCart(
-      cart.map((item) =>
-        item.id === id && item.count > 0
-          ? { ...item, count: item.count - 1 }
-          : item,
-      ).filter((item) => item.count > 0),
-    );
-  };
+  const { cart, increment, decrement, total } = useContext(CartContext);
 
   return (
-    <>
-      <div className="container my-5">
-        <h2 className="text-center mb-4">Carrito de Compras</h2>
-        {cart.length === 0 ? (
-          <p className="text-center">El carrito está vacío.</p>
-        ) : (
+    <div className="container my-5">
+      <h2 className="text-center mb-4">Carrito de Compras</h2>
+
+      {cart.length === 0 ? (
+        <p className="text-center">El carrito está vacío.</p>
+      ) : (
+        <>
           <table className="table table-bordered">
             <thead>
               <tr>
@@ -41,6 +22,7 @@ const Cart = () => {
                 <th>Total</th>
               </tr>
             </thead>
+
             <tbody>
               {cart.map((item) => (
                 <tr key={item.id}>
@@ -56,14 +38,17 @@ const Cart = () => {
                   <td>
                     <button
                       className="btn btn-sm btn-danger me-2"
-                      onClick={() => handleDecrement(item.id)}>
+                      onClick={() => decrement(item.id)}
+                    >
                       -
                     </button>
 
                     {item.count}
+
                     <button
                       className="btn btn-sm btn-success ms-2"
-                      onClick={() => handleIncrement(item.id)}>
+                      onClick={() => increment(item.id)}
+                    >
                       +
                     </button>
                   </td>
@@ -72,16 +57,14 @@ const Cart = () => {
               ))}
             </tbody>
           </table>
-        )}
-        <p className="text-end fw-bold">
-          Total a Pagar: $
-          {cart
-            .reduce((total, item) => total + item.price * item.count, 0)
-            .toLocaleString()}
-          <button className="btn btn-primary btn-sm ms-3">Pagar Ahora</button>
-        </p>
-      </div>
-    </>
+
+          <p className="text-end fw-bold">
+            Total a Pagar: ${total.toLocaleString()}
+            <button className="btn btn-primary btn-sm ms-3">Pagar Ahora</button>
+          </p>
+        </>
+      )}
+    </div>
   );
 };
 

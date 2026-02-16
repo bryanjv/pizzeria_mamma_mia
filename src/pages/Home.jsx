@@ -41,6 +41,7 @@ const Home = () => {
           {pizzas.map((pizza) => (
             <div className="col-md-4" key={pizza.id}>
               <CardPizza
+                id={pizza.id}
                 name={pizza.name}
                 price={pizza.price}
                 ingredients={pizza.ingredients}
