@@ -1,8 +1,11 @@
 import { useContext } from "react";
 import { CartContext } from "../context/CartContext";
+import { UserContext } from "../context/UserContext";
 
 const Cart = () => {
   const { cart, increment, decrement, total } = useContext(CartContext);
+
+  const { token } = useContext(UserContext);
 
   return (
     <div className="container my-5">
@@ -38,8 +41,7 @@ const Cart = () => {
                   <td>
                     <button
                       className="btn btn-sm btn-danger me-2"
-                      onClick={() => decrement(item.id)}
-                    >
+                      onClick={() => decrement(item.id)}>
                       -
                     </button>
 
@@ -47,8 +49,7 @@ const Cart = () => {
 
                     <button
                       className="btn btn-sm btn-success ms-2"
-                      onClick={() => increment(item.id)}
-                    >
+                      onClick={() => increment(item.id)}>
                       +
                     </button>
                   </td>
@@ -60,7 +61,9 @@ const Cart = () => {
 
           <p className="text-end fw-bold">
             Total a Pagar: ${total.toLocaleString()}
-            <button className="btn btn-primary btn-sm ms-3">Pagar Ahora</button>
+            <button className="btn btn-primary btn-sm ms-3" disabled={!token}>
+              Pagar Ahora
+            </button>
           </p>
         </>
       )}

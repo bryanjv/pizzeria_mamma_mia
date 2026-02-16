@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import { useContext } from "react";
 import { CartContext } from "../context/CartContext";
+import { Link } from "react-router-dom";
 
 const CardPizza = ({ id, name, price, ingredients, img }) => {
   const { addToCart } = useContext(CartContext);
@@ -27,12 +28,13 @@ const CardPizza = ({ id, name, price, ingredients, img }) => {
       </div>
 
       <div className="card-footer d-flex justify-content-between">
-        <button className="btn btn-outline-dark btn-sm">👀 Ver Más</button>
+        <Link to={`/pizza/${id}`} className="btn btn-outline-dark btn-sm">
+          👀 Ver Más
+        </Link>
 
         <button
           className="btn btn-dark btn-sm"
-          onClick={() => addToCart({ id, name, price, img })}
-        >
+          onClick={() => addToCart({ id, name, price, img })}>
           🛒 Añadir
         </button>
       </div>
@@ -41,7 +43,7 @@ const CardPizza = ({ id, name, price, ingredients, img }) => {
 };
 
 CardPizza.propTypes = {
-  id: PropTypes.string.isRequired, 
+  id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
   ingredients: PropTypes.arrayOf(PropTypes.string).isRequired,

@@ -1,6 +1,14 @@
 import { useState } from "react";
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { UserContext } from "../context/UserContext";
 
 const Login = () => {
+
+  const { login } = useContext(UserContext);
+const navigate = useNavigate();
+
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
@@ -20,8 +28,9 @@ const Login = () => {
       return;
     }
 
-    setMessage(`Usuario con correo ${email} ha iniciado sesión`);
     setIsSuccess(true);
+    login();
+    navigate("/profile");
   };
 
   return (

@@ -9,24 +9,39 @@ import Login from "./pages/Login";
 import Cart from "./pages/Cart";
 import NotFound from "./components/NotFound";
 
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 
 import "./App.css";
+import { useContext } from "react";
+import { UserContext } from "./context/UserContext";
 
 function App() {
+  const { token } = useContext(UserContext);
+
+  console.log("App token:", token);
+
   return (
     <div className="d-flex flex-column min-vh-100">
       <Navbar />
       <main className="flex-fill">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/pizza/p001" element={<Pizza />} />
+          <Route path="/pizza/:id" element={<Pizza />} />
           <Route path="/cart" element={<Cart />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="*" element={<NotFound />} />
+          <Route
+            path="/login"
+            element={token ? <Navigate to="/" /> : <Login />}
+          />
+          <Route
+            path="/register"
+            element={token ? <Navigate to="/" /> : <Register />}
+          />
+          <Route
+            path="/profile"
+            element={token ? <Profile /> : <Navigate to="/login" />}
+          />
           <Route path="/404" element={<NotFound />} />
-          <Route path="/profile" element={<Profile />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
 
